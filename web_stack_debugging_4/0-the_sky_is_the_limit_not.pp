@@ -1,7 +1,11 @@
-# Test nginx server setup
+# debug apache 500 server error
 
-exec { 'ULIMIT':
-  onlyif  => 'test -e /etc/default/nginx',
-  command => 'sed -i "5s/[0-9]\+/$( ulimit -n )/" /etc/default/nginx; service nginx restart',
-  path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+service {'nginx':
+    ensure => 'running'
+}
+
+exec { 'new-state':
+    command  => 'sed -i "s/ULIMIT=\"-n 15\"/ULIMIT=\"-n 4096\"/g" /etc/default/nginx',
+    provider => 'shell',
+    notify   => service['nginx']
 }

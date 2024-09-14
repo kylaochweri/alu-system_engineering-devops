@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-#connecting to the server without using password
-
-Host *
-    PasswordAuthentication no
-    IdentityFile ~/.ssh/school
+#Configuring a remote host to accept connections without password
+Host * 
+        IndetityFile ~/.ssh/school
+        PasswordAuthentication no
